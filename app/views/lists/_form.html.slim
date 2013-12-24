@@ -10,12 +10,23 @@ form
   .row
     .large-3.columns
       label What matters?
-      input#what-matters placeholder="Type keyword" type="text" data-url="#{tags_path}"
+      input#what-matters placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
     .large-9.columns style="padding-top: 30px;"
       ul.inline-list.tag-list#what-matters-list
   .row
     .large-3.columns
       label Not important:
-      input#not-important placeholder="Type keyword" type="text" data-url="#{tags_path}"
+      input#not-important placeholder="E.g. Price" type="text" data-url="#{tags_path}"
     .large-9.columns style="padding-top: 30px;"
       ul.inline-list.tag-list#not-important-list
+
+  h3
+    | Add establishments
+
+  .row
+    .large-6.columns
+      label Location
+      input#location placeholder="E.g. San Francisco" type="text" data-url="#{call_google_path}"
+    .large-6.columns
+      label Establishment name
+      input#add-establishments placeholder="E.g. Maruya Sushi" type="text" data-url="#{auth_details_path}"
