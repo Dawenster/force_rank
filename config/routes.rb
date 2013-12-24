@@ -3,4 +3,5 @@ ForceRank::Application.routes.draw do
   root :to => 'lists#index'
 
   resources :lists, :except => [:show]
+  resources :tags, :only => [:index]
 end

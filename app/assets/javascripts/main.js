@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $(".static-banner").click(function() {
+  $(".logo").click(function() {
     window.location = "/";
   });
 });

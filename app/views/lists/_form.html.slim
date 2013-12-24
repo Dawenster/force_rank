@@ -10,8 +10,12 @@ form
   .row
     .large-3.columns
       label What matters?
-      input placeholder="Type keyword" type="text"
+      input#what-matters placeholder="Type keyword" type="text" data-url="#{tags_path}"
+    .large-9.columns style="padding-top: 30px;"
+      ul.inline-list.tag-list#what-matters-list
   .row
     .large-3.columns
       label Not important:
-      input placeholder="Type keyword" type="text"
+      input#not-important placeholder="Type keyword" type="text" data-url="#{tags_path}"
+    .large-9.columns style="padding-top: 30px;"
+      ul.inline-list.tag-list#not-important-list
