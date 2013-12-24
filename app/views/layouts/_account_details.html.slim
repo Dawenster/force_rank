@@ -1,0 +1,8 @@
+- if user_signed_in?
+  span style="margin-right: 5px;"
+    = current_user.name
+  = link_to 'Account', edit_user_registration_path, :class => "button tiny secondary user-link"
+  = link_to 'Logout', destroy_user_session_path, :method => :delete, :class => "button tiny secondary user-link"
+- else
+  = link_to 'Register', new_user_registration_path, :class => "button tiny secondary user-link"
+  = link_to 'Login', new_user_session_path, :class => "button tiny secondary user-link"

@@ -1,0 +1,30 @@
+.header {
+  height: 120px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.top-links {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+  .username {
+    margin-right: 5px;
+  }
+  .user-link {  
+    margin-right: 5px;
+  }
+  .create-new-list-button {
+    a {
+      color: white;
+    }
+  }
+}
+
+.title {
+  position: absolute;
+  bottom: 0px;
+  h2 {
+    margin: 0;
+  }
+}

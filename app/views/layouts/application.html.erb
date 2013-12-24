@@ -12,26 +12,17 @@
   </head>
 
   <body>
-    <% if notice %>
-      <div data-alert class="alert-box info">
-        <!-- Your content goes here -->
-        <p><%= notice %></p>
-        <a href="#" class="close">&times;</a>
+    <div class="row" style="height: 100%;">
+      <div class="small-3 columns" style="height: 100%;">
+        <%= render 'layouts/static_banner' %>
       </div>
-    <% end %>
-    <% if alert %>
-      <div data-alert class="alert-box">
-        <!-- Your content goes here -->
-        <p><%= alert %></p>
-        <a href="#" class="close">&times;</a>
+      <div class="small-9 columns" style="height: 100%;">
+        <%= yield %>
       </div>
-    <% end %>
-    <%= yield %>
-
-    <%= render 'layouts/user_widget' %>
-
+    </div>
     <%= javascript_include_tag "application" %>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
     <script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   </body>
 </html>
