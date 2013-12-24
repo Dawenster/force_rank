@@ -1,3 +1,3 @@
 ForceRank::Application.routes.draw do
-  root :to => 'pages#index'
+  root :to => 'lists#index'
 end
