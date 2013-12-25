@@ -1,9 +1,9 @@
 .header
   .top-links
     = render "layouts/account_details"
-    .button.tiny.create-new-list-button
-      - new_list_link = user_signed_in? ? new_list_path : new_user_registration_path
-      = link_to("Create new list", new_list_link)
+    - new_list_link = user_signed_in? ? new_list_path : new_user_registration_path
+    = link_to("Create new list", new_list_link, :class => "button tiny create-new-list-button")
+    = link_to("Your lists", user_lists_path(current_user.slug), :class => "button tiny secondary", :style => "margin-left: 5px;") if current_user
   .title
     h2
       - title ||= "Title"

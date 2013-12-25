@@ -86,6 +86,11 @@ class ListsController < ApplicationController
     end
   end
 
+  def user_lists
+    user = User.find_by_slug(params[:user_slug])
+    @lists = user.lists
+  end
+
   private
 
   def user_profile_parameters

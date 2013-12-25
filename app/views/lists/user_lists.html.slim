@@ -1,0 +1,14 @@
+= render "layouts/header", :title => "Your lists"
+
+- if @lists.any?
+  - @lists.each do |list|
+    h3
+      = list.title
+    p
+      = list.description
+- else
+  h3
+    | Looks like you don't have any lists yet!
+  p
+    | Let's get you started :)
+  = link_to("Create new list", new_list_path, :class => "button tiny create-new-list-button")

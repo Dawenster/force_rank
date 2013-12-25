@@ -6,6 +6,6 @@ class Tag < ActiveRecord::Base
   private
 
   def create_slug
-    self.slug = self.name.gsub(" ","").gsub("-", "").downcase
+    self.slug = self.name.parameterize
   end
 end

@@ -5,4 +5,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :lists
+
+  before_save :create_slug
+
+  private
+
+  def create_slug
+    self.slug = self.name.parameterize
+  end
 end
