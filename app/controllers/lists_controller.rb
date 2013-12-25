@@ -58,7 +58,8 @@ class ListsController < ApplicationController
 
   def call_google
     respond_to do |format|
-      url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + params[:term] + "&radius=500&types=(regions)&sensor=true&key=AIzaSyCCghLMewvbiDArJfKlxL0OUdIeihQzAqQ"
+      term = params[:term].gsub(",", " ").gsub(" ", "+")
+      url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + term + "&radius=500&types=(regions)&sensor=true&key=AIzaSyCCghLMewvbiDArJfKlxL0OUdIeihQzAqQ"
       results = JSON.parse(RestClient.get url, {})
       format.json { render :json => { :results => results } }
     end

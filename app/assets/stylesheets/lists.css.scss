@@ -1,0 +1,15 @@
+.search-results-list, .selected-results-list {
+  margin-left: 0;
+  li {
+    list-style-type: none;
+  }
+}
+
+.dragger {
+  border-radius: 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  text-align: center;
+  padding-top: 6px;
+  color: white;
+}
