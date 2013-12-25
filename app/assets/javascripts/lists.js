@@ -12,6 +12,49 @@ $(document).ready(function() {
     }
   }, 100);
 
+  $(".save-button").click(function() {
+
+    var whatMatters = $("#what-matters-list").children();
+    var whatMattersList = [];
+    for (var i = 0; i < whatMatters.length; i++) {
+      whatMattersList.push($(whatMatters[i]).attr("data-tag"));
+    }
+
+    // var notImportant = $("#not-important-list").children();
+    // var notImportantList = [];
+    // for (var i = 0; i < notImportant.length; i++) {
+    //   notImportantList.push($(notImportant[i]).attr("data-tag"));
+    // }
+
+    var establishments = $("h4");
+    var establishmentsList = [];
+    for (var i = 0; i < establishments.length; i++) {
+      establishmentsList.push(
+        {
+          name: $(establishments[i]).text(),
+          image: $(establishments[i]).attr("data-image"),
+          location: $(establishments[i]).attr("data-location"),
+          score: $(establishments[i]).siblings(".slider").children(".dragger").text()
+        }
+      )
+    }
+
+    $.ajax({
+      'url': $("form").attr("action"),
+      'method': 'post',
+      'dataType': 'json',
+      'data': {
+        title: $("#title").val(),
+        description: $("#description").val(),
+        matters: whatMattersList,
+        // notImportant: notImportantList,
+        establishments: establishmentsList
+      }
+    })
+    .done(function(data) {
+      window.location = data.path;
+    })
+  });
 
   $(".establishment-search-button").click(function() {
     currentEstablishmentSearch = $('#add-establishments').val();
@@ -88,12 +131,15 @@ $(document).ready(function() {
           var establishments = [];
           for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
             establishments.push(raw_establishments[i].name);
-            $(".search-results-list").append("<li><a href='#' class='establishment-result' data-yelp-id='" + raw_establishments[i].id + "'>" + raw_establishments[i].name + "</a></li>");
+            $(".search-results-list").append("<li><a href='#' class='establishment-result' data-image='" + raw_establishments[i].image_url + "' data-location='" + searchLocation + "' data-yelp-id='" + raw_establishments[i].id + "'>" + raw_establishments[i].name + "</a></li>");
           }
           $(".establishment-result").click(function(e) {
             e.preventDefault();
             var yelpId = $(this).attr("data-yelp-id");
-            $(".selected-results-list").append("<li><h4>" + $(this).text() + "<a href='#' class='establishment-close' style='margin-left: 5px; color: black;'>&times;</a></h4><input class='selected-slider " + yelpId + "'></input></li>");
+            var image = $(this).attr("data-image");
+            var establishmentLocation = $(this).attr("data-location");
+
+            $(".selected-results-list").append("<li><h4 data-location='" + establishmentLocation + "' data-image='" + image + "' >" + $(this).text() + "<a href='#' class='establishment-close' style='margin-left: 5px; color: black;'>&times;</a></h4><input class='selected-slider " + yelpId + "'></input></li>");
             $("." + yelpId).simpleSlider();
             $("." + yelpId).siblings(".slider").children(".dragger").text("0");
 

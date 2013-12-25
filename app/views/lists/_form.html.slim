@@ -1,24 +1,24 @@
-form
+= simple_form_for @list, :url => url_for(:action => "#{@list.id ? 'update' : 'create'}", :controller => "lists") do |f|
   .row
     .small-12.columns
       label What's the name?
-      input placeholder="E.g. Best sushi in Vancouver" type="text"
+      input#title placeholder="E.g. Best sushi in Vancouver" type="text"
   .row
     .small-12.columns
       label Describe your dream experience:
-      textarea placeholder="Imagine… Fresh fish that melts in your mouth.  Perfectly cooked and seasoned rice." style="height: 60px !important;"
+      textarea#description placeholder="Imagine… Fresh fish that melts in your mouth.  Perfectly cooked and seasoned rice." style="height: 60px !important;"
   .row
     .small-3.columns
       label What matters?
       input#what-matters placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
     .small-9.columns style="padding-top: 30px;"
       ul.inline-list.tag-list#what-matters-list
-  .row
-    .small-3.columns
-      label Not important:
-      input#not-important placeholder="E.g. Price" type="text" data-url="#{tags_path}"
-    .small-9.columns style="padding-top: 30px;"
-      ul.inline-list.tag-list#not-important-list
+  / .row
+  /   .small-3.columns
+  /     label Not important:
+  /     input#not-important placeholder="E.g. Price" type="text" data-url="#{tags_path}"
+  /   .small-9.columns style="padding-top: 30px;"
+  /     ul.inline-list.tag-list#not-important-list
 
   h3
     | Add establishments
@@ -29,7 +29,7 @@ form
       input#location placeholder="E.g. San Francisco" type="text" data-url="#{call_google_path}"
     .small-6.columns.establishment-holder
       label Establishment name
-      input#add-establishments disabled="" placeholder="E.g. Maruya Sushi" type="text" data-url="#{auth_details_path}"
+      input#add-establishments disabled="" placeholder="E.g. Maruya Sushi (enter location first)" type="text" data-url="#{auth_details_path}"
 
     .small-12.columns
       .button.secondary.tiny.disabled.establishment-search-button
@@ -42,5 +42,5 @@ form
       ul.search-results-list
 
     .small-12.columns
-      .button.tiny
+      .button.tiny.save-button type="submit"
         | Save

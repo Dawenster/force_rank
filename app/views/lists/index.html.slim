@@ -1,1 +1,7 @@
-= render "layouts/header"
+= render "layouts/header", :title => "All lists"
+
+- @lists.each do |list|
+  h3
+    = list.title
+  p
+    = list.description
