@@ -1,6 +1,7 @@
 - if user_signed_in?
-  span style="margin-right: 5px;"
-    = current_user.name
+  / span style="margin-right: 5px;"
+  /   = current_user.name
+  = link_to "Your lists", user_lists_path(current_user.slug), :class => "button tiny secondary user-link"
   = link_to 'Account', edit_user_registration_path, :class => "button tiny secondary user-link"
   = link_to 'Logout', destroy_user_session_path, :method => :delete, :class => "button tiny secondary user-link"
 - else
