@@ -11,6 +11,7 @@ class ListsController < ApplicationController
 
   def show
     @list = List.find_by_slug(params[:list_slug])
+    @show_page = true
   end
 
   def new

@@ -6,7 +6,10 @@
     = render "layouts/account_details"
   .title
     - title ||= "Title"
-    - if title.length < 50
+    - if @show_page
+      h4.subheader
+        | The search for:
+    - if title.length < 40
       h2
         = title
     - else

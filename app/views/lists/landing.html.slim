@@ -5,7 +5,7 @@
 
 - if @featured_list
   h1
-    = @featured_list.title
+    = link_to(@featured_list.title, public_list_path(@featured_list.slug))
   h6.subheader.opinion
     = "Opinion: #{@featured_list.user.name}"
 

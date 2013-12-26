@@ -1,1 +1,4 @@
-= render "layouts/header", :title => 
+= render "layouts/header", :title => @list.title
+
+- @list.items_by_rank.each do |item|
+  = render "list_item", :list => @list, :item => item
