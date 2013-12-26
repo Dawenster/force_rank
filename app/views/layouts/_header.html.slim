@@ -5,8 +5,12 @@
     
     = render "layouts/account_details"
   .title
-    h2
-      - title ||= "Title"
-      = title
+    - title ||= "Title"
+    - if title.length < 50
+      h2
+        = title
+    - else
+      h4
+        = title
 
 = render 'layouts/alerts'

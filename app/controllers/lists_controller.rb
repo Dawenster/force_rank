@@ -1,4 +1,10 @@
 class ListsController < ApplicationController
+  def landing
+    random_lists = List.all.sample(4)
+    @featured_list = random_lists.pop
+    @other_featured_lists = random_lists
+  end
+
   def index
     @lists = List.order("created_at DESC")
   end

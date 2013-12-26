@@ -1,0 +1,38 @@
+.item-rank {
+  text-align: center;
+  line-height: 100px;
+  font-size: 30px;
+  color: grey;
+}
+
+.item-details-holder {
+  position: relative;
+  height: 100px;
+}
+
+.item-details-bucket {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+}
+
+.item-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.item-location {
+  margin-top: 5px;
+  font-style: italic;
+  font-size: 12px;
+}
+
+.item-description {
+  font-style: italic;
+  font-size: 14px;
+  color: grey;
+}

@@ -5,3 +5,30 @@ body, html {
 .ui-helper-hidden-accessible {
   display: none;
 }
+
+.feature-quest {
+  background-color: #E8E8E8;
+  padding: 5px;
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+.opinion {
+  margin-top: -10px;
+  margin-bottom: 30px;
+}
+
+.horizontal-line {
+  margin: 20px 0px;
+  width: 100%;
+  border-bottom: 1px solid lightgrey;
+}
+
+.explore-other-text {
+  font-style: italic;
+}
+
+.landing-action-buttons {
+  margin-top: 30px;
+}

@@ -1,6 +1,6 @@
 ForceRank::Application.routes.draw do
   devise_for :users
-  root :to => 'lists#index'
+  root :to => 'lists#landing'
 
   resources :lists, :except => [:show]
   get "/:user_slug/lists" => "lists#user_lists", :as => :user_lists
