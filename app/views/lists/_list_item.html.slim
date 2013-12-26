@@ -3,12 +3,22 @@
     .small-1.columns.item-rank
       = list.rank_for(item)
     .small-2.columns
-      = image_tag(item.image)
+      - unless item.image == "undefined"
+        .hide-for-touch
+          = link_to(image_tag(item.image), item.url)
+        .show-for-touch
+          = link_to(image_tag(item.image), item.mobile_url)
+      - else
+        .logo-image style="margin-top: 10px !important;"
+          i.fa.fa-thumbs-up.fa-thumbs-up
     .small-3.columns
       .item-details-holder
         .item-details-bucket
           .item-name
-            = item.name
+            .hide-for-touch
+              = link_to(item.name, item.url)
+            .show-for-touch
+              = link_to(item.name, item.mobile_url)
           .item-location
             = item.location
     .small-6.columns

@@ -34,6 +34,8 @@ $(document).ready(function() {
           name: $(establishments[i]).text(),
           image: $(establishments[i]).attr("data-image"),
           location: $(establishments[i]).attr("data-location"),
+          url: $(establishments[i]).attr("data-url"),
+          mobile_url: $(establishments[i]).attr("data-mobile-url"),
           score: $(establishments[i]).siblings(".slider").children(".dragger").text()
         }
       )

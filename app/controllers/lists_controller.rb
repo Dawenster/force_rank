@@ -35,6 +35,8 @@ class ListsController < ApplicationController
         item = Item.find_or_create_by_name(name)
         item.image = v["image"]
         item.location = v["location"]
+        item.url = v["url"]
+        item.mobile_url = v["mobile_url"]
         item.score = v["score"].to_i
         item.save
         @list.items << item
