@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-ForceRank::Application.config.secret_key_base = '0d09d5aee595b577765eb532981b55c963096f7253b4d8a24b1802544118ea5be53f2f56dfea72dd2fc22a9c1f1ceb66b025c17f565d4bc6957c503edafcd75c'
+Table32::Application.config.secret_key_base = '0d09d5aee595b577765eb532981b55c963096f7253b4d8a24b1802544118ea5be53f2f56dfea72dd2fc22a9c1f1ceb66b025c17f565d4bc6957c503edafcd75c'

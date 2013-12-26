@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ForceRank::Application.load_tasks
+Table32::Application.load_tasks

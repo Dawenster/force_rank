@@ -1,4 +1,4 @@
-ForceRank::Application.routes.draw do
+Table32::Application.routes.draw do
   devise_for :users
   root :to => 'lists#landing'
 

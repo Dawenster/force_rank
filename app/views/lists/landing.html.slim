@@ -3,22 +3,23 @@
 .feature-quest
   | Featured quest:
 
-h1
-  = @featured_list.title
-h6.subheader.opinion
-  = "Opinion: #{@featured_list.user.name}"
+- if @featured_list
+  h1
+    = @featured_list.title
+  h6.subheader.opinion
+    = "Opinion: #{@featured_list.user.name}"
 
-.featured-content
-  = render "list_item", :list => @featured_list, :item => @featured_list.item_with_rank(1)
+  .featured-content
+    = render "list_item", :list => @featured_list, :item => @featured_list.item_with_rank(1)
 
-.explore-other
-  h4.explore-other-text
-    | Explore other featured quests:
+  .explore-other
+    h4.explore-other-text
+      | Explore other featured quests:
 
-  - @other_featured_lists.each do |list|
-    div
-      = list.title
+    - @other_featured_lists.each do |list|
+      div
+        = list.title
 
-  .landing-action-buttons
-    = link_to("View all quests", lists_path, :class => "button success tiny create-new-list-button", :style => "margin-right: 5px;")
-    = link_to("Create your own list", new_list_path, :class => "button tiny create-new-list-button")
+    .landing-action-buttons
+      = link_to("View all quests", lists_path, :class => "button success tiny create-new-list-button", :style => "margin-right: 5px;")
+      = link_to("Create your own list", new_list_path, :class => "button tiny create-new-list-button")
