@@ -8,4 +8,6 @@ ForceRank::Application.routes.draw do
   resources :tags, :only => [:index]
   get "auth-details" => "lists#auth_details", :as => :auth_details
   get "call-google" => "lists#call_google", :as => :call_google
+
+  get "/:list_slug" => "lists#user_lists", :as => :public_list
 end

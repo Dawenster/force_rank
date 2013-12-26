@@ -9,6 +9,10 @@ class ListsController < ApplicationController
     @lists = List.order("created_at DESC")
   end
 
+  def show
+    @list = List.find_by_slug(params[:list_slug])
+  end
+
   def new
     @list = List.new
   end
