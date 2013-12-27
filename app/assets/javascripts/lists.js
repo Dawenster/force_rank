@@ -27,6 +27,18 @@ $(document).ready(function() {
     }
   });
 
+  $("body").on("click", ".add-review-notes-link", function(e) {
+    e.preventDefault();
+    $(this).parent().siblings("textarea").toggle();
+    
+    if ($(this).text() == "Add optional review notes") {
+      $(this).text("Remove note");
+    } else {
+      $(this).text("Add optional review notes");
+      $(this).parent().siblings("textarea").val("");
+    }
+  });
+
   var saveList = function() {
     var whatMatters = $("#what-matters-list").children();
     var whatMattersList = [];
@@ -150,7 +162,9 @@ $(document).ready(function() {
             str += "'>" + raw_establishments[i].name + "</a></li>"
 
             $(".search-results-list").append(str);
+
           }
+
           $(".establishment-result").click(function(e) {
             e.preventDefault();
 
@@ -182,22 +196,9 @@ $(document).ready(function() {
               $(this).parent().parent().remove()
             });
 
-            $(".add-review-notes-link").click(function(e) {
-              e.preventDefault()
-              $(this).parent().siblings("textarea").toggle();
-              if ($(this).text() == "Add optional review notes") {
-                $(this).text("Remove note");
-              } else {
-                $(this).text("Add optional review notes");
-                $(this).parent().siblings("textarea").val("");
-              }
-            });
-
             $(this).parent().remove();
 
-
             $(".selected-slider").bind("slider:changed", function (event, data) {
-              // console.log(data.value);
               $(this).siblings(".slider").children(".dragger").text(Math.ceil(data.value * 100));
             });
           });
