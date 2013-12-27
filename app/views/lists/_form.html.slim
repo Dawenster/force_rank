@@ -24,16 +24,17 @@
     | Add establishments
 
   .row
-    .small-6.columns.location-holder
+    .small-5.columns.location-holder
       label Location
       input#location placeholder="E.g. San Francisco" type="text" data-url="#{call_google_path}"
-    .small-6.columns.establishment-holder
-      label Establishment name
-      input#add-establishments disabled="" placeholder="E.g. Maruya Sushi (enter location first)" type="text" data-url="#{auth_details_path}"
+    form
+      .small-5.columns.establishment-holder
+        label Establishment name
+        input#add-establishments disabled="" placeholder="E.g. Maruya Sushi (enter location first)" type="text" data-url="#{auth_details_path}"
 
-    .small-12.columns
-      .button.secondary.tiny.disabled.establishment-search-button
-        | Search
+      .small-2.columns
+        .button.disabled.tiny.establishment-search-button style="margin-top: 24px;" type="submit"
+          | Search
 
     .small-12.columns
       ul.selected-results-list

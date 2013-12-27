@@ -25,22 +25,26 @@ class ListsController < ApplicationController
       @list.description = params[:description]
       @list.user_id = current_user.id
 
-      params[:matters].each do |tag|
-        tag = Tag.find_or_create_by_name(tag)
-        @list.tags << tag
-      end
+      create_tags(params[:matters], @list)
+      # params[:matters].each do |tag|
+      #   tag = Tag.find_or_create_by_name(tag)
+      #   @list.tags << tag
+      # end
 
-      params[:establishments].each do |k, v|
-        name = v["name"].gsub("×", "")
-        item = Item.find_or_create_by_name(name)
-        item.image = v["image"]
-        item.location = v["location"]
-        item.url = v["url"]
-        item.mobile_url = v["mobile_url"]
-        item.score = v["score"].to_i
-        item.save
-        @list.items << item
-      end
+      create_items(params[:establishments], @list)
+      # params[:establishments].each do |k, v|
+      #   name = v["name"].gsub("×", "")
+      #   item = Item.find_or_create_by_name(name)
+      #   item.image = v["image"]
+      #   item.location = v["location"]
+      #   item.url = v["url"]
+      #   item.mobile_url = v["mobile_url"]
+      #   item.score = v["score"].to_i
+      #   item.save
+      #   @list.items << item
+      # end
+
+      create_notes(params[:notes])
 
       if @list.save
         flash[:success] = "#{@list.title} has been successfully created."
@@ -105,6 +109,31 @@ class ListsController < ApplicationController
   end
 
   private
+
+  def create_tags(arr, list)
+    arr.each do |tag|
+      tag = Tag.find_or_create_by_name(tag)
+      list.tags << tag
+    end
+  end
+
+  def create_items(hash, list)
+    hash.each do |k, v|
+      name = v["name"].gsub("×", "")
+      item = Item.find_or_create_by_name(name)
+      item.image = v["image"]
+      item.location = v["location"]
+      item.url = v["url"]
+      item.mobile_url = v["mobile_url"]
+      item.score = v["score"].to_i
+      item.save
+      list.items << item
+    end
+  end
+
+  def create_notes(text, item)
+    
+  end
 
   def user_profile_parameters
     params.require(:user).permit(:title, :user_id, :description)

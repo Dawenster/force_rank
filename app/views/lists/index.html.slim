@@ -2,6 +2,6 @@
 
 - @lists.each do |list|
   h3
-    = list.title
+    = link_to(list.title, public_list_path(list.slug))
   p
     = list.description

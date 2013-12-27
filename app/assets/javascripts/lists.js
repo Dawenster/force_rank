@@ -9,11 +9,25 @@ $(document).ready(function() {
       callGoogle(currentLocationSearch);
       $("#add-establishments").removeAttr("disabled");
       $(".establishment-search-button").removeClass("disabled");
+      $(".establishment-search-button").addClass("secondary");
     }
   }, 100);
 
   $(".save-button").click(function() {
+    saveList();
+  });
 
+  $(".establishment-search-button").click(function() {
+    callYelp();
+  });
+
+  $("#add-establishments").keyup(function(event){
+    if(event.keyCode == 13){
+      callYelp();
+    }
+  });
+
+  var saveList = function() {
     var whatMatters = $("#what-matters-list").children();
     var whatMattersList = [];
     for (var i = 0; i < whatMatters.length; i++) {
@@ -56,12 +70,7 @@ $(document).ready(function() {
     .done(function(data) {
       window.location = data.path;
     })
-  });
-
-  $(".establishment-search-button").click(function() {
-    currentEstablishmentSearch = $('#add-establishments').val();
-    callYelp(currentEstablishmentSearch);
-  });
+  }
 
   var callGoogle = function(term) {
     var callGoogleUrl = $("#location").attr("data-url");
@@ -82,8 +91,9 @@ $(document).ready(function() {
     });
   }
 
-  var callYelp = function(term) {
+  var callYelp = function() {
     var auth = null;
+    var term = $('#add-establishments').val();
     var authDetailsUrl = $("#add-establishments").attr("data-url");
     var searchLocation = $("#location").val();
 
@@ -98,12 +108,10 @@ $(document).ready(function() {
         consumerSecret: auth.consumerSecret,
         tokenSecret: auth.accessTokenSecret
       };
-      var terms = term;
-      var near = searchLocation;
 
       parameters = [];
-      parameters.push(['term', terms]);
-      parameters.push(['location', near]);
+      parameters.push(['term', term]);
+      parameters.push(['location', searchLocation]);
       parameters.push(['callback', 'cb']);
       parameters.push(['oauth_consumer_key', auth.consumerKey]);
       parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
@@ -133,7 +141,14 @@ $(document).ready(function() {
           var establishments = [];
           for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
             establishments.push(raw_establishments[i].name);
-            $(".search-results-list").append("<li><a href='#' class='establishment-result' data-mobile-url='" + raw_establishments[i].mobile_url + "' data-url='" + raw_establishments[i].url + "' data-image='" + raw_establishments[i].image_url + "' data-location='" + searchLocation + "' data-yelp-id='" + raw_establishments[i].id + "'>" + raw_establishments[i].name + "</a></li>");
+            var str = "<li><a href='#' class='establishment-result' data-mobile-url='" + raw_establishments[i].mobile_url
+            str += "' data-url='" + raw_establishments[i].url
+            str += "' data-image='" + raw_establishments[i].image_url
+            str += "' data-location='" + searchLocation
+            str += "' data-yelp-id='" + raw_establishments[i].id
+            str += "'>" + raw_establishments[i].name + "</a></li>"
+
+            $(".search-results-list").append(str);
           }
           $(".establishment-result").click(function(e) {
             e.preventDefault();
@@ -143,16 +158,27 @@ $(document).ready(function() {
             var url = $(this).attr("data-url");
             var mobileUrl = $(this).attr("data-mobile-url");
 
-            $(".selected-results-list").append("<li><h4 data-mobile-url='" + mobileUrl + "' data-url='" + url + "' data-location='" + establishmentLocation + "' data-image='" + image + "' >" + $(this).text() + "<a href='#' class='establishment-close' style='margin-left: 5px; color: black;'>&times;</a></h4><input class='selected-slider " + yelpId + "'></input></li>");
+            var str = "<li><h4 data-mobile-url='" + mobileUrl
+            str += "' data-url='" + url
+            str += "' data-location='" + establishmentLocation
+            str += "' data-image='" + image
+            str += "' >" + $(this).text()
+            str += "<a href='#' class='establishment-close' style='margin-left: 5px; color: black;'>&times;</a></h4><input class='selected-slider "
+            str += yelpId + "'></input></li>"
+
+            $(".selected-results-list").append(str);
             $("." + yelpId).simpleSlider();
-            $("." + yelpId).siblings(".slider").children(".dragger").text("0");
+            $("." + yelpId).simpleSlider("setValue", .5)
+            $("." + yelpId).siblings(".slider").children(".dragger").text("50");
 
             $(".establishment-close").click(function(e) {
               e.preventDefault();
               $(this).parent().parent().remove()
             });
 
-            $(".search-results-list li").remove();
+            // $(".search-results-list li").remove(); // Removes all the li items
+            $(this).parent().remove();
+
 
             $(".selected-slider").bind("slider:changed", function (event, data) {
               // console.log(data.value);
