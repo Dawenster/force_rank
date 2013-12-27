@@ -18,7 +18,9 @@ $(document).ready(function() {
   });
 
   $(".establishment-search-button").click(function() {
-    callYelp();
+    if (!$(this).hasClass("disabled")) {
+      callYelp();
+    }
   });
 
   $("#add-establishments").keyup(function(event){
@@ -30,7 +32,7 @@ $(document).ready(function() {
   $("body").on("click", ".add-review-notes-link", function(e) {
     e.preventDefault();
     $(this).parent().siblings("textarea").toggle();
-    
+
     if ($(this).text() == "Add optional review notes") {
       $(this).text("Remove note");
     } else {
@@ -152,6 +154,9 @@ $(document).ready(function() {
           $(".search-results-list li").remove(); // Removes all the li items
           raw_establishments = data.businesses;
           var establishments = [];
+
+          $(".search-results-list").append("<li>Select from below (results from Yelp):</li>");
+
           for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
             establishments.push(raw_establishments[i].name);
             var str = "<li><a href='#' class='establishment-result' data-mobile-url='" + raw_establishments[i].mobile_url
