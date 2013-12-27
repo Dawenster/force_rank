@@ -25,30 +25,13 @@ class ListsController < ApplicationController
       @list.description = params[:description]
       @list.user_id = current_user.id
 
-      create_tags(params[:matters], @list)
-      # params[:matters].each do |tag|
-      #   tag = Tag.find_or_create_by_name(tag)
-      #   @list.tags << tag
-      # end
-
-      create_items(params[:establishments], @list)
-      # params[:establishments].each do |k, v|
-      #   name = v["name"].gsub("×", "")
-      #   item = Item.find_or_create_by_name(name)
-      #   item.image = v["image"]
-      #   item.location = v["location"]
-      #   item.url = v["url"]
-      #   item.mobile_url = v["mobile_url"]
-      #   item.score = v["score"].to_i
-      #   item.save
-      #   @list.items << item
-      # end
-
-      create_notes(params[:notes])
+      @list = create_tags(params[:matters], @list)
+      @list = create_items(params[:establishments], @list)
 
       if @list.save
+        @list = create_notes(params[:notes], @list)
         flash[:success] = "#{@list.title} has been successfully created."
-        format.json { render :json => { :path => lists_path } }
+        format.json { render :json => { :path => public_list_path(@list.slug) } }
       else
         flash.now[:warning] = @list.errors.messages.join(". ")
         format.json { render :json => { :path => "#" } }
@@ -110,15 +93,16 @@ class ListsController < ApplicationController
 
   private
 
-  def create_tags(arr, list)
-    arr.each do |tag|
+  def create_tags(tags, list)
+    tags.each do |tag|
       tag = Tag.find_or_create_by_name(tag)
       list.tags << tag
     end
+    return list
   end
 
-  def create_items(hash, list)
-    hash.each do |k, v|
+  def create_items(items, list)
+    items.each do |k, v|
       name = v["name"].gsub("×", "")
       item = Item.find_or_create_by_name(name)
       item.image = v["image"]
@@ -129,10 +113,21 @@ class ListsController < ApplicationController
       item.save
       list.items << item
     end
+    return list
   end
 
-  def create_notes(text, item)
-    
+  def create_notes(notes, list)
+    notes.each do |k, v|
+      unless v[:content].blank?
+        Note.create(
+          :content => v[:content],
+          :list_id => list.id,
+          :user_id => current_user.id,
+          :item_id => Item.find_by_name(v[:item]).id
+        )
+      end
+    end
+    return list
   end
 
   def user_profile_parameters

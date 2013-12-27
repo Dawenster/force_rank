@@ -41,6 +41,10 @@ $(document).ready(function() {
     }
   });
 
+  var checkAllInputFields = function() {
+
+  }
+
   var saveList = function() {
     var whatMatters = $("#what-matters-list").children();
     var whatMattersList = [];
@@ -69,6 +73,17 @@ $(document).ready(function() {
       )
     }
 
+    var notes = $(".notes");
+    var notesList = [];
+    for (var i = 0; i < notes.length; i++) {
+      notesList.push(
+        {
+          content: $(notes[i]).val(),
+          item: $(notes[i]).attr("data-item-name")
+        }
+      )
+    }
+
     $.ajax({
       'url': $("form").attr("action"),
       'method': 'post',
@@ -78,7 +93,8 @@ $(document).ready(function() {
         description: $("#description").val(),
         matters: whatMattersList,
         // notImportant: notImportantList,
-        establishments: establishmentsList
+        establishments: establishmentsList,
+        notes: notesList
       }
     })
     .done(function(data) {
@@ -186,7 +202,7 @@ $(document).ready(function() {
             str += "' >" + $(this).text()
             str += "<a href='#' class='establishment-close' style='margin-left: 5px; color: black;'>&times;</a></h4>"
             str += "<div class='add-review-notes'><a href='#' class='add-review-notes-link'>Add optional review notes</a></div>"
-            str += "<textarea class='hide' placeholder='Why did you rank this place the way you did?' data-item-name='" + $(this).text()
+            str += "<textarea class='hide notes' placeholder='Why did you rank this place the way you did?' data-item-name='" + $(this).text()
             str += "'></textarea>"
             str += "<input class='selected-slider "
             str += yelpId + "'></input></li>"

@@ -1,6 +1,7 @@
 class List < ActiveRecord::Base
   has_and_belongs_to_many :items
   has_and_belongs_to_many :tags
+  has_many :notes
   belongs_to :user
 
   before_save :create_slug

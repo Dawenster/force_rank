@@ -5,9 +5,9 @@
     .small-2.columns
       - unless item.image == "undefined"
         .hide-for-touch
-          = link_to(image_tag(item.image), item.url)
+          = link_to(image_tag(item.image), item.url, :target => "_blank")
         .show-for-touch
-          = link_to(image_tag(item.image), item.mobile_url)
+          = link_to(image_tag(item.image), item.mobile_url, :target => "_blank")
       - else
         .logo-image style="margin-top: 10px !important;"
           i.fa.fa-thumbs-up.fa-thumbs-up
@@ -16,9 +16,9 @@
         .item-details-bucket
           .item-name
             .hide-for-touch
-              = link_to(item.name, item.url)
+              = link_to(item.name, item.url, :target => "_blank")
             .show-for-touch
-              = link_to(item.name, item.mobile_url)
+              = link_to(item.name, item.mobile_url, :target => "_blank")
           .item-location
             = item.location
     .small-6.columns
