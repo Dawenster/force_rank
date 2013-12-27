@@ -88,14 +88,15 @@ class ListsController < ApplicationController
 
   def user_lists
     user = User.find_by_slug(params[:user_slug])
-    @lists = user.lists
+    @lists = user.lists.sort_by{ |l| l.created_at }.reverse
   end
 
   private
 
   def create_tags(tags, list)
-    tags.each do |tag|
-      tag = Tag.find_or_create_by_name(tag)
+    tags.each do |tag_name|
+      tag = Tag.find_by_slug(tag_name.parameterize)
+      tag ||= Tag.create(:name => tag_name)
       list.tags << tag
     end
     return list

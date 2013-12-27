@@ -4,15 +4,15 @@
       label What's the name?
       input#title placeholder="E.g. Best sushi in Vancouver" type="text"
   .row
+    .small-4.columns
+      label What are you judging on?
+      input#what-matters placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
+    .small-8.columns style="padding-top: 25px;"
+      ul.inline-list.tag-list#what-matters-list
+  .row
     .small-12.columns
       label Describe your dream experience:
       textarea#description placeholder="Imagine… Fresh fish that melts in your mouth.  Perfectly cooked and seasoned rice." style="height: 60px !important;"
-  .row
-    .small-3.columns
-      label What matters?
-      input#what-matters placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
-    .small-9.columns style="padding-top: 30px;"
-      ul.inline-list.tag-list#what-matters-list
   / .row
   /   .small-3.columns
   /     label Not important:
