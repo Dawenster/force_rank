@@ -1,10 +1,10 @@
 = simple_form_for @list, :url => url_for(:action => "#{@list.id ? 'update' : 'create'}", :controller => "lists") do |f|
   .row
-    .small-12.columns
+    .small-12.columns style="margin-bottom: 20px;"
       label What's the name?
       input#title placeholder="E.g. Best sushi in Vancouver" type="text"
   .row
-    .small-4.columns
+    .small-4.columns style="margin-bottom: 20px;"
       label What are you judging on?
       input#what-matters placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
     .small-8.columns style="padding-top: 25px;"

@@ -41,65 +41,99 @@ $(document).ready(function() {
     }
   });
 
-  var checkAllInputFields = function() {
+  var fieldsFilledInCorrectly = function() {
+    $(".error").remove(); // Remove any existing error boxes
 
+    var whatMatters = $("#what-matters-list").children();
+    var establishments = $("h4");
+    var title = $("#title").val();
+    var description = $("#description").val();
+    if (whatMatters.length > 0 && establishments.length > 0 && title != "" && description != "") {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  var addErrorBoxes = function() {
+    var whatMatters = $("#what-matters-list").children();
+    var establishments = $("h4");
+    var title = $("#title").val();
+    var description = $("#description").val();
+    if (whatMatters.length == 0) {
+      $("#what-matters").after("<small class='error'>Please add at least one</small>")
+    }
+    if (establishments.length == 0) {
+      $("#location").after("<small class='error'>Please add at least one</small>")
+      $("#add-establishments").after("<small class='error'>Please add at least one (add location first)</small>")
+    }
+    if (title == "") {
+      $("#title").after("<small class='error'>Please create a name for your list</small>")
+    }
+    if (description == "") {
+      $("#description").after("<small class='error'>Please describe your list</small>")
+    }
   }
 
   var saveList = function() {
-    var whatMatters = $("#what-matters-list").children();
-    var whatMattersList = [];
-    for (var i = 0; i < whatMatters.length; i++) {
-      whatMattersList.push($(whatMatters[i]).attr("data-tag"));
-    }
-
-    // var notImportant = $("#not-important-list").children();
-    // var notImportantList = [];
-    // for (var i = 0; i < notImportant.length; i++) {
-    //   notImportantList.push($(notImportant[i]).attr("data-tag"));
-    // }
-
-    var establishments = $("h4");
-    var establishmentsList = [];
-    for (var i = 0; i < establishments.length; i++) {
-      establishmentsList.push(
-        {
-          name: $(establishments[i]).text(),
-          image: $(establishments[i]).attr("data-image"),
-          location: $(establishments[i]).attr("data-location"),
-          url: $(establishments[i]).attr("data-url"),
-          mobile_url: $(establishments[i]).attr("data-mobile-url"),
-          score: $(establishments[i]).siblings(".slider").children(".dragger").text()
-        }
-      )
-    }
-
-    var notes = $(".notes");
-    var notesList = [];
-    for (var i = 0; i < notes.length; i++) {
-      notesList.push(
-        {
-          content: $(notes[i]).val(),
-          item: $(notes[i]).attr("data-item-name")
-        }
-      )
-    }
-
-    $.ajax({
-      'url': $("form").attr("action"),
-      'method': 'post',
-      'dataType': 'json',
-      'data': {
-        title: $("#title").val(),
-        description: $("#description").val(),
-        matters: whatMattersList,
-        // notImportant: notImportantList,
-        establishments: establishmentsList,
-        notes: notesList
+    if (fieldsFilledInCorrectly()) {
+      var whatMatters = $("#what-matters-list").children();
+      var whatMattersList = [];
+      for (var i = 0; i < whatMatters.length; i++) {
+        whatMattersList.push($(whatMatters[i]).attr("data-tag"));
       }
-    })
-    .done(function(data) {
-      window.location = data.path;
-    })
+
+      // var notImportant = $("#not-important-list").children();
+      // var notImportantList = [];
+      // for (var i = 0; i < notImportant.length; i++) {
+      //   notImportantList.push($(notImportant[i]).attr("data-tag"));
+      // }
+
+      var establishments = $("h4");
+      var establishmentsList = [];
+      for (var i = 0; i < establishments.length; i++) {
+        establishmentsList.push(
+          {
+            name: $(establishments[i]).text(),
+            image: $(establishments[i]).attr("data-image"),
+            location: $(establishments[i]).attr("data-location"),
+            url: $(establishments[i]).attr("data-url"),
+            mobile_url: $(establishments[i]).attr("data-mobile-url"),
+            score: $(establishments[i]).siblings(".slider").children(".dragger").text()
+          }
+        )
+      }
+
+      var notes = $(".notes");
+      var notesList = [];
+      for (var i = 0; i < notes.length; i++) {
+        notesList.push(
+          {
+            content: $(notes[i]).val(),
+            item: $(notes[i]).attr("data-item-name")
+          }
+        )
+      }
+
+      $.ajax({
+        'url': $("form").attr("action"),
+        'method': 'post',
+        'dataType': 'json',
+        'data': {
+          title: $("#title").val(),
+          description: $("#description").val(),
+          matters: whatMattersList,
+          // notImportant: notImportantList,
+          establishments: establishmentsList,
+          notes: notesList
+        }
+      })
+      .done(function(data) {
+        window.location = data.path;
+      })
+    } else {
+      addErrorBoxes();
+    }
   }
 
   var callGoogle = function(term) {
