@@ -137,6 +137,7 @@ $(document).ready(function() {
         'dataType': 'jsonp',
         'jsonpCallback': 'cb',
         'success': function(data, textStats, XMLHttpRequest) {
+          $(".search-results-list li").remove(); // Removes all the li items
           raw_establishments = data.businesses;
           var establishments = [];
           for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
@@ -152,6 +153,7 @@ $(document).ready(function() {
           }
           $(".establishment-result").click(function(e) {
             e.preventDefault();
+
             var yelpId = $(this).attr("data-yelp-id");
             var image = $(this).attr("data-image");
             var establishmentLocation = $(this).attr("data-location");
@@ -163,7 +165,11 @@ $(document).ready(function() {
             str += "' data-location='" + establishmentLocation
             str += "' data-image='" + image
             str += "' >" + $(this).text()
-            str += "<a href='#' class='establishment-close' style='margin-left: 5px; color: black;'>&times;</a></h4><input class='selected-slider "
+            str += "<a href='#' class='establishment-close' style='margin-left: 5px; color: black;'>&times;</a></h4>"
+            str += "<div class='add-review-notes'><a href='#' class='add-review-notes-link'>Add optional review notes</a></div>"
+            str += "<textarea class='hide' placeholder='Why did you rank this place the way you did?' data-item-name='" + $(this).text()
+            str += "'></textarea>"
+            str += "<input class='selected-slider "
             str += yelpId + "'></input></li>"
 
             $(".selected-results-list").append(str);
@@ -176,7 +182,17 @@ $(document).ready(function() {
               $(this).parent().parent().remove()
             });
 
-            // $(".search-results-list li").remove(); // Removes all the li items
+            $(".add-review-notes-link").click(function(e) {
+              e.preventDefault()
+              $(this).parent().siblings("textarea").toggle();
+              if ($(this).text() == "Add optional review notes") {
+                $(this).text("Remove note");
+              } else {
+                $(this).text("Add optional review notes");
+                $(this).parent().siblings("textarea").val("");
+              }
+            });
+
             $(this).parent().remove();
 
 
