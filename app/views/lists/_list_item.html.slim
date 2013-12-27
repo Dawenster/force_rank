@@ -25,6 +25,6 @@
       .item-details-holder
         .item-details-bucket
           .item-description
-            | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore…. [read more]
+            = item.note(list).content.truncate(100) if item.note(list)
 
   .horizontal-line
