@@ -1,12 +1,13 @@
 = simple_form_for @list, :url => url_for(:action => "#{@list.id ? 'update' : 'create'}", :controller => "lists") do |f|
+  .div.hide.data-method data-type="#{@list.id ? 'put' : 'post'}"
   .row
     .small-12.columns style="margin-bottom: 20px;"
-      label What's the name?
-      input#title placeholder="E.g. Best sushi in Vancouver" type="text" value="#{@list.title}"
+      label What are you on a quest for?
+      input#title.list-form placeholder="E.g. The best sushi in San Fran" type="text" value="#{@list.title}"
   .row
     .small-4.columns style="margin-bottom: 20px;"
       label What are you judging on?
-      input#what-matters placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
+      input#what-matters.list-form placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
     .small-8.columns style="padding-top: 25px;"
       ul.inline-list.tag-list#what-matters-list
         - @list.tags.each do |tag|
@@ -14,7 +15,7 @@
   .row
     .small-12.columns
       label Describe your dream experience:
-      textarea#description placeholder="Imagine… Fresh fish that melts in your mouth.  Perfectly cooked and seasoned rice." style="height: 60px !important;"
+      textarea#description.list-form placeholder="Imagine… Fresh fish that melts in your mouth.  Perfectly cooked and seasoned rice." style="height: 60px !important;"
         = @list.description
   / .row
   /   .small-3.columns
@@ -29,11 +30,11 @@
   .row
     .small-5.columns.location-holder
       label Location
-      input#location placeholder="E.g. San Francisco" type="text" data-url="#{call_google_path}"
+      input#location.list-form placeholder="E.g. San Francisco" type="text" data-url="#{call_google_path}"
     form
       .small-5.columns.establishment-holder
         label Establishment name
-        input#add-establishments disabled="" placeholder="E.g. Maruya Sushi (enter location first)" type="text" data-url="#{auth_details_path}"
+        input#add-establishments.list-form disabled="" placeholder="E.g. Maruya Sushi (enter location first)" type="text" data-url="#{auth_details_path}"
 
       .small-2.columns
         .button.disabled.tiny.establishment-search-button style="margin-top: 24px;" type="submit"

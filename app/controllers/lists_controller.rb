@@ -12,6 +12,7 @@ class ListsController < ApplicationController
   def show
     @list = List.find_by_slug(params[:list_slug])
     @show_page = true
+    @list_owner = @list.user == current_user
   end
 
   def new
@@ -98,8 +99,8 @@ class ListsController < ApplicationController
   end
 
   def user_lists
-    user = User.find_by_slug(params[:user_slug])
-    @lists = user.lists.sort_by{ |l| l.created_at }.reverse
+    @user = User.find_by_slug(params[:user_slug])
+    @lists = @user.lists.sort_by{ |l| l.created_at }.reverse
   end
 
   def results_items_list
@@ -167,7 +168,7 @@ class ListsController < ApplicationController
         note.destroy if note
       else
         if note
-          Note.update_attributes(
+          note.update_attributes(
             :content => v[:content]
           )
         else

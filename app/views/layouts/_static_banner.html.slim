@@ -5,12 +5,26 @@
   .logo-image
     i.fa.fa-thumbs-up.fa-thumbs-up
 
-  .banner-content
-    p
-      | We admit it.  When it comes to food, drinks and good living, we’re pretty opinionated. 
-    p
-      | From the juiciest steak to the best local café - we have our rankings - don’t you?  
-    p
-      | Table32 is a community for those on the quest for the best.  Don’t write another five star review.  #1 is #1.
-    p
-      | Explore quests, join one, or start one of your own.
+  - if @list.try(:id)
+    .banner-content-with-list
+      .sidebar-title
+        | Opinion:
+      .sidebar-content
+        = link_to(@list.user.name, user_lists_path(@list.user.slug))
+      .sidebar-title
+        | What matters:
+      .sidebar-content
+        - @list.tags.each do |tag|
+          div style="margin-bottom: 5px;"
+            = tag.name
+
+  - else
+    .banner-content
+      p
+        | We admit it.  When it comes to food, drinks and good living, we’re pretty opinionated. 
+      p
+        | From the juiciest steak to the best local café - we have our rankings - don’t you?  
+      p
+        | Table32 is a community for those on the quest for the best.  Don’t write another five star review.  #1 is #1.
+      p
+        | Explore quests, join one, or start one of your own.

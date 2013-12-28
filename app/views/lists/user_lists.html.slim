@@ -1,4 +1,4 @@
-= render "layouts/header", :title => "Your lists"
+= render "layouts/header", :title => @user == current_user ? "Your lists" : "Lists by #{@user.name}"
 
 - if @lists.any?
   - @lists.each do |list|

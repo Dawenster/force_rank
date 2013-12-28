@@ -12,8 +12,16 @@
     - if title.length < 40
       h2
         = title
+        - if @list_owner
+          span
+            a href="#{edit_list_path(@list)}"
+              i.fa.fa-pencil-square-o.fa-pencil-square-o.edit-list-link
     - else
       h4
         = title
+        - if @list_owner
+          span
+            a href="#{edit_list_path(@list)}"
+              i.fa.fa-pencil-square-o.fa-pencil-square-o.edit-list-link
 
 = render 'layouts/alerts'

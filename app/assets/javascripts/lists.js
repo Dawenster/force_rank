@@ -31,7 +31,7 @@ $(document).ready(function() {
 
   $("body").on("click", ".establishment-close", function(e) {
     e.preventDefault();
-    $(this).parent().parent().remove()
+    $(this).parent().parent().parent().parent().remove()
   });
 
   $("body").on("click", ".add-review-notes-link", function(e) {
@@ -158,7 +158,7 @@ $(document).ready(function() {
             location: $(establishments[i]).attr("data-location"),
             url: $(establishments[i]).attr("data-url"),
             mobile_url: $(establishments[i]).attr("data-mobile-url"),
-            score: $(establishments[i]).siblings(".slider").children(".dragger").text()
+            score: $(establishments[i]).parent().parent().siblings(".slider").children(".dragger").text()
           }
         )
       }
@@ -174,9 +174,11 @@ $(document).ready(function() {
         )
       }
 
+      var method = $(".data-method").attr("data-type");
+
       $.ajax({
         'url': $("form").attr("action"),
-        'method': 'post',
+        'method': method,
         'dataType': 'json',
         'data': {
           title: $("#title").val(),

@@ -37,3 +37,17 @@
     font-size: 12px !important;
   }
 }
+
+.banner-content-with-list {
+  padding: 20px;
+  font-size: 14px;
+  .sidebar-title {
+    font-style: italic;
+    text-decoration: underline;
+    margin-bottom: 10px;
+  }
+  .sidebar-content {
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+}

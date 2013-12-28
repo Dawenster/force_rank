@@ -22,9 +22,7 @@
           .item-location
             = item.location
     .small-6.columns
-      .item-details-holder
-        .item-details-bucket
-          .item-description
-            = item.note(list).content.truncate(100) if item.note(list)
+      .item-description
+        = truncate(item.note(list).content, length: 120) { link_to(' [read more]', '#', :class => "read-more", "data-full-description" => item.note(list).content) } if item.note(list)
 
   .horizontal-line

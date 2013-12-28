@@ -1,4 +1,4 @@
-= render "layouts/header", :title => "Track your quest for the best restaurants for your favorite obsessions."
+= render "layouts/header", :title => "Track your quest for the best restaurants."
 
 .feature-quest
   | Featured quest:
@@ -7,7 +7,7 @@
   h1
     = link_to(@featured_list.title, public_list_path(@featured_list.slug))
   h6.subheader.opinion
-    = "Opinion: #{@featured_list.user.name}"
+    = "Opinion: #{link_to(@featured_list.user.name, user_lists_path(@featured_list.user.slug))}".html_safe
 
   .featured-content
     = render "list_item", :list => @featured_list, :item => @featured_list.item_with_rank(1)
