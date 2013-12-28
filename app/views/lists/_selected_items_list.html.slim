@@ -21,6 +21,6 @@ li
       .add-review-notes
         a.add-review-notes-link href='#'
           = (item.nil? || item.note(@list).nil?) ? "Add optional review notes" : "Remove note"
-  textarea.notes.list-form class="#{'hide' if (item.nil? || item.note(@list).nil?)}" placeholder='Why did you rank this place the way you did?' data-item-name="#{name}"
+  textarea.notes class="#{'hide' if (item.nil? || item.note(@list).nil?)}" placeholder='Why did you rank this place the way you did?' data-item-name="#{name}"
     = item.note(@list).content unless item.nil? || item.note(@list).nil?
   input.selected-slider.list-form class="#{yelp_id}" data-item-score="#{item_score.to_f / 100}"

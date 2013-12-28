@@ -1,4 +1,7 @@
 = render "layouts/header", :title => @list.title
 
+.list-description
+  = simple_format("\"#{@list.description}\"")
+
 - @list.items_by_rank.each do |item|
   = render "list_item", :list => @list, :item => item
