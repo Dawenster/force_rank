@@ -41,7 +41,7 @@
 
     .small-12.columns
       ul.selected-results-list data-ajax-url="#{selected_items_list_path}"
-        - @list.items.each do |item|
+        - @list.items_by_rank.each do |item|
           = render "selected_items_list", :item => item
 
     .small-12.columns
