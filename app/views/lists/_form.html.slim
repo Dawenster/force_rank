@@ -2,17 +2,20 @@
   .row
     .small-12.columns style="margin-bottom: 20px;"
       label What's the name?
-      input#title placeholder="E.g. Best sushi in Vancouver" type="text"
+      input#title placeholder="E.g. Best sushi in Vancouver" type="text" value="#{@list.title}"
   .row
     .small-4.columns style="margin-bottom: 20px;"
       label What are you judging on?
       input#what-matters placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
     .small-8.columns style="padding-top: 25px;"
       ul.inline-list.tag-list#what-matters-list
+        - @list.tags.each do |tag|
+          = render "tags/tag_template", :tag_name => tag.name
   .row
     .small-12.columns
       label Describe your dream experience:
       textarea#description placeholder="Imagine… Fresh fish that melts in your mouth.  Perfectly cooked and seasoned rice." style="height: 60px !important;"
+        = @list.description
   / .row
   /   .small-3.columns
   /     label Not important:
@@ -20,7 +23,7 @@
   /   .small-9.columns style="padding-top: 30px;"
   /     ul.inline-list.tag-list#not-important-list
 
-  h3
+  h3 style="margin-top: 20px;"
     | Add establishments
 
   .row
@@ -37,10 +40,12 @@
           | Search
 
     .small-12.columns
-      ul.selected-results-list
+      ul.selected-results-list data-ajax-url="#{selected_items_list_path}"
+        - @list.items.each do |item|
+          = render "selected_items_list", :item => item
 
     .small-12.columns
-      ul.search-results-list
+      ul.search-results-list data-ajax-url="#{results_items_list_path}"
 
     .small-12.columns
       .button.tiny.save-button type="submit"

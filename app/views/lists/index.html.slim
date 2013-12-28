@@ -1,7 +1,4 @@
 = render "layouts/header", :title => "All lists"
 
 - @lists.each do |list|
-  h3
-    = link_to(list.title, public_list_path(list.slug))
-  p
-    = list.description
+  = render "list", :list => list

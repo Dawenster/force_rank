@@ -1,0 +1,25 @@
+ruby:
+  if item
+    url = item.url
+    mobile_url = item.mobile_url
+    location = item.location
+    image = item.image
+    name = item.name
+    yelp_id = item.yelp_id
+    item_score = item.score
+  end
+
+li
+  .clearfix
+    .left
+      = image_tag(image, :width => 50, :style => "margin-right: 10px;")
+    .left
+      h4 data-mobile-url="#{mobile_url}" data-url="#{url}" data-location="#{location}" data-image="#{image}"
+        = name
+        a.establishment-close href='#' style='margin-left: 5px; color: black;'
+          | &times;
+      .add-review-notes
+        a.add-review-notes-link href='#'
+          | Add optional review notes
+  textarea.hide.notes placeholder='Why did you rank this place the way you did?' data-item-name="#{name}"
+  input.selected-slider class="#{yelp_id}" data-item-score="#{item_score.to_f / 100}"

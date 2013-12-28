@@ -91,12 +91,43 @@ class ListsController < ApplicationController
     @lists = user.lists.sort_by{ |l| l.created_at }.reverse
   end
 
+  def results_items_list
+    respond_to do |format|
+      local_variables = {
+        :name => params[:name],
+        :mobile_url => params[:mobile_url],
+        :url => params[:url],
+        :image => params[:image],
+        :location => params[:location],
+        :yelp_id => params[:yelp_id]
+      }
+      template = render_to_string(:partial => 'results_items_list', :locals => local_variables)
+      format.json { render :json => { :template => template } }
+    end
+  end
+
+  def selected_items_list
+    respond_to do |format|
+      local_variables = {
+        :name => params[:name],
+        :mobile_url => params[:mobile_url],
+        :url => params[:url],
+        :image => params[:image],
+        :location => params[:location],
+        :yelp_id => params[:yelp_id],
+        :item => nil
+      }
+      template = render_to_string(:partial => 'selected_items_list', :locals => local_variables)
+      format.json { render :json => { :template => template } }
+    end
+  end
+
   private
 
   def create_tags(tags, list)
     tags.each do |tag_name|
       tag = Tag.find_by_slug(tag_name.parameterize)
-      tag ||= Tag.create(:name => tag_name)
+      tag ||= Tag.create(:name => tag_name.downcase.capitalize)
       list.tags << tag
     end
     return list

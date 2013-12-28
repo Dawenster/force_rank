@@ -17,8 +17,7 @@
       | Explore other featured quests:
 
     - @other_featured_lists.each do |list|
-      div
-        = list.title
+      = render "list", :list => list
 
     .landing-action-buttons
       = link_to("View all quests", lists_path, :class => "button success tiny create-new-list-button", :style => "margin-right: 5px;")

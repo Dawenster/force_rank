@@ -39,6 +39,13 @@ $(document).ready(function() {
     }
   });
 
+  $("body").on("focusout", "#what-matters", function(event){
+    var newTag = $("#what-matters").val();
+    if(newTag != ""){
+      addNewTag();
+    }
+  });
+
   var appendTag = function(input) {
     // if (input.attr("id") == "what-matters") {
     $("#what-matters-list").append("<li data-tag='" + input + "'><span class='label secondary'>" + input + "<a href='#' class='tag-close' style='margin-left: 5px; color: black;'>&times;</a></span></li>");

@@ -29,9 +29,14 @@ $(document).ready(function() {
     }
   });
 
+  $("body").on("click", ".establishment-close", function(e) {
+    e.preventDefault();
+    $(this).parent().parent().remove()
+  });
+
   $("body").on("click", ".add-review-notes-link", function(e) {
     e.preventDefault();
-    $(this).parent().siblings("textarea").toggle();
+    $(this).parent().parent().parent().siblings("textarea").toggle();
 
     if ($(this).text() == "Add optional review notes") {
       $(this).text("Remove note");
@@ -40,6 +45,60 @@ $(document).ready(function() {
       $(this).parent().siblings("textarea").val("");
     }
   });
+
+  $("body").on("click", ".establishment-result", function(e) {
+    e.preventDefault();
+
+    var yelpId = $(this).attr("data-yelp-id");
+    var image = $(this).attr("data-image");
+    var establishmentLocation = $(this).attr("data-location");
+    var url = $(this).attr("data-url");
+    var mobileUrl = $(this).attr("data-mobile-url");
+
+    var ajaxUrl = $(".selected-results-list").attr("data-ajax-url");
+
+    var data = {
+      name: $(this).text(),
+      mobile_url: mobileUrl,
+      url: url,
+      image: image,
+      location: establishmentLocation,
+      yelp_id: yelpId
+    }
+
+    $(this).parent().remove();
+
+    $.ajax({
+      url: ajaxUrl,
+      method: "get",
+      dataType: 'json',
+      data: data
+    })
+    .done(function(data) {
+      $(".selected-results-list").append(data.template);
+      $("." + yelpId).simpleSlider();
+      $("." + yelpId).simpleSlider("setValue", .5)
+      $("." + yelpId).siblings(".slider").children(".dragger").text("50");
+    })
+
+  });
+
+  var displaySlidersOnEdit = function() {
+    var sliders = $(".selected-slider");
+    sliders.simpleSlider();
+
+    for (var i = 0; i < sliders.length; i++) {
+      var itemScore = $(sliders[i]).attr("data-item-score");
+      $(sliders[i]).simpleSlider("setValue", itemScore)
+      $(sliders[i]).siblings(".slider").children(".dragger").text(itemScore * 100);
+    }
+  }
+
+  $("body").on("slider:changed", ".selected-slider", function (event, data) {
+    $(this).siblings(".slider").children(".dragger").text(Math.ceil(data.value * 100));
+  });
+
+  displaySlidersOnEdit();
 
   var fieldsFilledInCorrectly = function() {
     $(".error").remove(); // Remove any existing error boxes
@@ -202,61 +261,31 @@ $(document).ready(function() {
         'jsonpCallback': 'cb',
         'success': function(data, textStats, XMLHttpRequest) {
           $(".search-results-list li").remove(); // Removes all the li items
-          raw_establishments = data.businesses;
-          var establishments = [];
+          var raw_establishments = data.businesses;
 
           $(".search-results-list").append("<li>Select from below (results from Yelp):</li>");
+          var ajaxUrl = $(".search-results-list").attr("data-ajax-url");
 
           for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
-            establishments.push(raw_establishments[i].name);
-            var str = "<li><a href='#' class='establishment-result' data-mobile-url='" + raw_establishments[i].mobile_url
-            str += "' data-url='" + raw_establishments[i].url
-            str += "' data-image='" + raw_establishments[i].image_url
-            str += "' data-location='" + searchLocation
-            str += "' data-yelp-id='" + raw_establishments[i].id
-            str += "'>" + raw_establishments[i].name + "</a></li>"
+            var data = {
+              name: raw_establishments[i].name,
+              mobile_url: raw_establishments[i].mobile_url,
+              url: raw_establishments[i].url,
+              image: raw_establishments[i].image_url,
+              location: searchLocation,
+              yelp_id: raw_establishments[i].id
+            }
 
-            $(".search-results-list").append(str);
-
+            $.ajax({
+              url: ajaxUrl,
+              method: "get",
+              dataType: 'json',
+              data: data
+            })
+            .done(function(data) {
+              $(".search-results-list").append(data.template);
+            })
           }
-
-          $(".establishment-result").click(function(e) {
-            e.preventDefault();
-
-            var yelpId = $(this).attr("data-yelp-id");
-            var image = $(this).attr("data-image");
-            var establishmentLocation = $(this).attr("data-location");
-            var url = $(this).attr("data-url");
-            var mobileUrl = $(this).attr("data-mobile-url");
-
-            var str = "<li><h4 data-mobile-url='" + mobileUrl
-            str += "' data-url='" + url
-            str += "' data-location='" + establishmentLocation
-            str += "' data-image='" + image
-            str += "' >" + $(this).text()
-            str += "<a href='#' class='establishment-close' style='margin-left: 5px; color: black;'>&times;</a></h4>"
-            str += "<div class='add-review-notes'><a href='#' class='add-review-notes-link'>Add optional review notes</a></div>"
-            str += "<textarea class='hide notes' placeholder='Why did you rank this place the way you did?' data-item-name='" + $(this).text()
-            str += "'></textarea>"
-            str += "<input class='selected-slider "
-            str += yelpId + "'></input></li>"
-
-            $(".selected-results-list").append(str);
-            $("." + yelpId).simpleSlider();
-            $("." + yelpId).simpleSlider("setValue", .5)
-            $("." + yelpId).siblings(".slider").children(".dragger").text("50");
-
-            $(".establishment-close").click(function(e) {
-              e.preventDefault();
-              $(this).parent().parent().remove()
-            });
-
-            $(this).parent().remove();
-
-            $(".selected-slider").bind("slider:changed", function (event, data) {
-              $(this).siblings(".slider").children(".dragger").text(Math.ceil(data.value * 100));
-            });
-          });
         }
       });
     });
