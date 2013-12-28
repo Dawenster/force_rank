@@ -44,15 +44,26 @@ class ListsController < ApplicationController
   end
 
   def update
-    @list = List.find(params[:id])
-    params = convert_param_dates
-    @list.assign_attributes(params[:list])
-    if @list.save
-      flash[:success] = "#{@list.title} has been successfully updated."
-      redirect_to lists_path
-    else
-      flash.now[:warning] = @list.errors.messages.join(". ")
-      render "edit"
+    respond_to do |format|
+      @list = List.find(params[:id])
+      @list.title = params[:title]
+      @list.description = params[:description]
+      @list.user_id = current_user.id
+
+      @list.items = []
+      @list.tags = []
+
+      @list = create_tags(params[:matters], @list)
+      @list = create_items(params[:establishments], @list)
+
+      if @list.save
+        @list = create_notes(params[:notes], @list)
+        flash[:success] = "#{@list.title} has been successfully created."
+        format.json { render :json => { :path => public_list_path(@list.slug) } }
+      else
+        flash.now[:warning] = @list.errors.messages.join(". ")
+        format.json { render :json => { :path => "#" } }
+      end
     end
   end
 
@@ -150,13 +161,23 @@ class ListsController < ApplicationController
 
   def create_notes(notes, list)
     notes.each do |k, v|
-      unless v[:content].blank?
-        Note.create(
-          :content => v[:content],
-          :list_id => list.id,
-          :user_id => current_user.id,
-          :item_id => Item.find_by_name(v[:item]).id
-        )
+      item = Item.find_by_name(v[:item])
+      note = item.note(list)
+      if v[:content].blank?
+        note.destroy if note
+      else
+        if note
+          Note.update_attributes(
+            :content => v[:content]
+          )
+        else
+          Note.create(
+            :content => v[:content],
+            :list_id => list.id,
+            :user_id => current_user.id,
+            :item_id => item.id
+          )
+        end
       end
     end
     return list

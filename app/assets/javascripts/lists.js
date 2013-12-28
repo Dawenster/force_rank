@@ -42,7 +42,7 @@ $(document).ready(function() {
       $(this).text("Remove note");
     } else {
       $(this).text("Add optional review notes");
-      $(this).parent().siblings("textarea").val("");
+      $(this).parent().parent().parent().siblings("textarea").val("");
     }
   });
 

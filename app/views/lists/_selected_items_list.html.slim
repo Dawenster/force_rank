@@ -20,6 +20,7 @@ li
           | &times;
       .add-review-notes
         a.add-review-notes-link href='#'
-          | Add optional review notes
-  textarea.hide.notes placeholder='Why did you rank this place the way you did?' data-item-name="#{name}"
+          = item.note(@list) ? "Remove note" : "Add optional review notes"
+  textarea.notes class="#{'hide' unless item.note(@list)}" placeholder='Why did you rank this place the way you did?' data-item-name="#{name}"
+    = item.note(@list).try(:content)
   input.selected-slider class="#{yelp_id}" data-item-score="#{item_score.to_f / 100}"

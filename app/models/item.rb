@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   has_many :notes
 
   def note(list)
+    return false unless list
     note = self.notes.select do |note|
       note.item_id == self.id &&
       note.list_id == list.id
