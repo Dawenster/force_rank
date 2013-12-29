@@ -49,8 +49,10 @@
       ul.search-results-list data-ajax-url="#{results_items_list_path}"
 
     .small-12.columns style="#{'margin-bottom: 50px;' unless @list.id}"
+      = image_tag("loader.gif", :class => "hide result-search-loader")
       .button.tiny.save-button type="submit"
         | Save
+      = image_tag("loader.gif", :class => "hide save-loader")
 
     - if @list.id
       .small-12.columns style="margin-bottom: 50px;"

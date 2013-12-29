@@ -137,6 +137,8 @@ $(document).ready(function() {
 
   var saveList = function() {
     if (fieldsFilledInCorrectly()) {
+      saveLoader("on");
+
       var whatMatters = $("#what-matters-list").children();
       var whatMattersList = [];
       for (var i = 0; i < whatMatters.length; i++) {
@@ -193,6 +195,9 @@ $(document).ready(function() {
       .done(function(data) {
         window.location = data.path;
       })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        saveLoader("off");
+      })
     } else {
       addErrorBoxes();
     }
@@ -217,7 +222,33 @@ $(document).ready(function() {
     });
   }
 
+  var searchLoader = function(status) {
+    if (status == "on") {
+      $(".establishment-search-button").text("Searching");
+      $(".establishment-search-button").addClass("disabled");
+      $(".establishment-search-button").removeClass("secondary");
+    } else {
+      $(".establishment-search-button").text("Search");
+      $(".establishment-search-button").removeClass("disabled");
+      $(".establishment-search-button").addClass("secondary");
+    }
+    $(".result-search-loader").toggle();
+  }
+
+  var saveLoader = function(status) {
+    if (status == "on") {
+      $(".save-button").text("Saving");
+      $(".save-button").addClass("disabled");
+    } else {
+      $(".save-button").text("Save");
+      $(".save-button").removeClass("disabled");
+    }
+    $(".save-loader").toggle();
+  }
+
   var callYelp = function() {
+    searchLoader("on");
+
     var auth = null;
     var term = $('#add-establishments').val();
     var authDetailsUrl = $("#add-establishments").attr("data-url");
@@ -291,6 +322,7 @@ $(document).ready(function() {
                 $(".search-results-list").append(data.template);
               })
             }
+            searchLoader("off");
           } else {
             $(".search-results-list").append("<li>No results - please try another search</li>");
           }
