@@ -1,4 +1,7 @@
 class ListsController < ApplicationController
+  
+  before_filter :authenticate_user!, :only => [:new, :edit]
+
   def landing
     random_lists = List.all.sample(4)
     @featured_list = random_lists.pop
