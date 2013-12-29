@@ -1,0 +1,40 @@
+.off-canvas-wrap.show-for-small-only
+  .inner-wrap
+    nav.tab-bar
+      section.left-small
+        a.left-off-canvas-toggle.menu-icon
+          span
+      section.middle.tab-bar-section
+        h1.title
+          = link_to "Table32", root_path, :style => "color: white;"
+
+    aside.left-off-canvas-menu
+      ul.off-canvas-list
+        li
+          label Lists
+        li
+          = link_to "Create new list", new_list_path
+
+        - if user_signed_in?
+          li
+            = link_to "Your lists", user_lists_path(current_user.slug)
+          li
+            label User
+          li
+            = link_to 'Account', edit_user_registration_path
+          li
+            = link_to 'Logout', destroy_user_session_path, :method => :delete
+
+        - else
+          li
+            label User
+          li
+            = link_to 'Register', new_user_registration_path
+          li
+            = link_to 'Login', new_user_session_path
+
+    section.main-section
+      .small-12.medium-9.columns style="min-height: 100%;"
+        = content
+
+    a.exit-off-canvas

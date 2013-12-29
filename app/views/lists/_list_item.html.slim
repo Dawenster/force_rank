@@ -1,8 +1,8 @@
 .list-item
   .row
-    .small-1.columns.item-rank
+    .small-1.medium-1.columns.item-rank
       = list.rank_for(item)
-    .small-2.columns
+    .small-5.medium-2.columns
       - unless item.image == "undefined"
         .hide-for-touch
           = link_to(image_tag(item.image), item.url, :target => "_blank")
@@ -11,7 +11,7 @@
       - else
         .logo-image style="margin-top: 10px !important;"
           i.fa.fa-thumbs-up.fa-thumbs-up
-    .small-5.columns
+    .small-5.medium-5.columns
       .item-details-holder
         .item-details-bucket
           .item-name
@@ -21,7 +21,7 @@
               = link_to(item.name, item.mobile_url, :target => "_blank")
           .item-location
             = item.location
-    .small-4.columns
+    .small-12.medium-4.columns
       .item-description
         = truncate(item.note(list).content, length: 80) { link_to(' [read more]', '#', :class => "read-more", "data-full-description" => item.note(list).content) } if item.note(list)
 

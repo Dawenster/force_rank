@@ -1,12 +1,12 @@
 .header
-  .top-links
+  .top-links.hide-for-small-only
     = link_to("Create new list", new_list_path, :class => "button tiny create-new-list-button")
     
     = render "layouts/account_details"
   .title
     - title ||= "Title"
     - if @show_page
-      h4.subheader
+      h4.subheader.the-search-for
         | The search for:
     - if title.length < 40
       h2

@@ -5,17 +5,17 @@
       label What are you on a quest for?
       input#title.list-form placeholder="E.g. The best sushi in San Fran" type="text" value="#{@list.title}"
   .row
-    .small-4.columns style="margin-bottom: 20px;"
+    .small-12.large-4.columns style="margin-bottom: 20px;"
       label What are you judging on?
       input#what-matters.list-form placeholder="E.g. Deliciousness" type="text" data-url="#{tags_path}"
-    .small-8.columns style="padding-top: 25px;"
+    .small-12.large-8.columns
       ul.inline-list.tag-list#what-matters-list
         - @list.tags.each do |tag|
           = render "tags/tag_template", :tag_name => tag.name
   .row
     .small-12.columns
       label Describe your dream experience:
-      textarea#description.list-form placeholder="Imagine… Fresh fish that melts in your mouth.  Perfectly cooked and seasoned rice." style="height: 60px !important;"
+      textarea#description.list-form placeholder="Fresh fish that melts in your mouth.  Perfectly cooked and seasoned rice." style="height: 60px !important;"
         = @list.description
   / .row
   /   .small-3.columns
@@ -28,15 +28,15 @@
     | Add establishments
 
   .row
-    .small-5.columns.location-holder
+    .small-12.large-5.columns.location-holder
       label Location
       input#location.list-form placeholder="E.g. San Francisco" type="text" data-url="#{call_google_path}"
     form
-      .small-5.columns.establishment-holder
+      .small-12.large-5.columns.establishment-holder
         label Establishment name
         input#add-establishments.list-form disabled="" placeholder="E.g. Maruya Sushi (enter location first)" type="text" data-url="#{auth_details_path}"
 
-      .small-2.columns
+      .small-12.large-2.columns
         .button.disabled.tiny.establishment-search-button style="margin-top: 24px;" type="submit"
           | Search
 

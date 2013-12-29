@@ -13,10 +13,11 @@
 
   <body>
     <div class="row" style="height: 100%;">
-      <div class="small-3 columns" style="height: 100%; padding-right: 0px;">
+      <div class="medium-3 columns hide-for-small-only" style="height: 100%; padding-right: 0px;">
         <%= render 'layouts/static_banner' %>
       </div>
-      <div class="small-9 columns" style="min-height: 100%; border-left: 1px solid lightgrey; padding-left: 30px;">
+      <%= render 'layouts/mobile_nav', :content => yield %>
+      <div class="small-12 medium-9 columns hide-for-small-only everything-else" style="min-height: 100%; border-left: 1px solid lightgrey; padding-left: 30px;">
         <%= yield %>
       </div>
     </div>
@@ -26,6 +27,13 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script type="text/javascript">
+      if (Modernizr.mq('only all and (min-width: 640px)')) {
+        $(".off-canvas-wrap").remove();
+      } else {
+        $(".everything-else").remove();
+      }
+    </script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
