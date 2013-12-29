@@ -48,6 +48,10 @@
     .small-12.columns
       ul.search-results-list data-ajax-url="#{results_items_list_path}"
 
-    .small-12.columns
+    .small-12.columns style="#{'margin-bottom: 50px;' unless @list.id}"
       .button.tiny.save-button type="submit"
         | Save
+
+    - if @list.id
+      .small-12.columns style="margin-bottom: 50px;"
+        = link_to "Delete", { :id => @list.id, :action => :destroy }, :method => :delete, :confirm => "Are you sure?  You're about to delete this list..."

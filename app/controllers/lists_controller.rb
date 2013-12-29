@@ -71,7 +71,7 @@ class ListsController < ApplicationController
   def destroy
     list = List.find(params[:id]).destroy
     flash[:success] = "#{list.title} has been deleted."
-    redirect_to lists_path
+    redirect_to user_lists_path(current_user.slug)
   end
 
   def auth_details
