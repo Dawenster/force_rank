@@ -11,7 +11,7 @@
       - else
         .logo-image style="margin-top: 10px !important;"
           i.fa.fa-thumbs-up.fa-thumbs-up
-    .small-3.columns
+    .small-5.columns
       .item-details-holder
         .item-details-bucket
           .item-name
@@ -21,8 +21,8 @@
               = link_to(item.name, item.mobile_url, :target => "_blank")
           .item-location
             = item.location
-    .small-6.columns
+    .small-4.columns
       .item-description
-        = truncate(item.note(list).content, length: 120) { link_to(' [read more]', '#', :class => "read-more", "data-full-description" => item.note(list).content) } if item.note(list)
+        = truncate(item.note(list).content, length: 80) { link_to(' [read more]', '#', :class => "read-more", "data-full-description" => item.note(list).content) } if item.note(list)
 
   .horizontal-line

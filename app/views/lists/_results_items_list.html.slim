@@ -1,5 +1,8 @@
 li
-  a.establishment-result href='#' data-mobile-url="#{mobile_url}" data-url="#{url}" data-image="#{image}" data-location="#{location}" data-yelp-id="#{yelp_id}"
-    = image_tag(image, :width => 50, :style => "margin-right: 10px;")
+  a.establishment-result href='#' data-mobile-url="#{mobile_url}" data-url="#{url}" data-image="#{image}" data-location="#{full_location}" data-yelp-id="#{yelp_id}"
+    = image_tag(image, :width => 50, :style => "margin-right: 10px;", :class => "left")
     span
-      = name
+      .result-name
+        = name
+      .result-location
+        = location

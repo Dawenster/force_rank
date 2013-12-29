@@ -114,6 +114,7 @@ class ListsController < ApplicationController
         :url => params[:url],
         :image => params[:image],
         :location => params[:location],
+        :full_location => params[:full_location],
         :yelp_id => params[:yelp_id]
       }
       template = render_to_string(:partial => 'results_items_list', :locals => local_variables)

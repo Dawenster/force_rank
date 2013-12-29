@@ -49,6 +49,7 @@ $(document).ready(function() {
   $("body").on("click", ".establishment-result", function(e) {
     e.preventDefault();
 
+    var name = $(this).children().children(".result-name").text();
     var yelpId = $(this).attr("data-yelp-id");
     var image = $(this).attr("data-image");
     var establishmentLocation = $(this).attr("data-location");
@@ -58,7 +59,7 @@ $(document).ready(function() {
     var ajaxUrl = $(".selected-results-list").attr("data-ajax-url");
 
     var data = {
-      name: $(this).text(),
+      name: name,
       mobile_url: mobileUrl,
       url: url,
       image: image,
@@ -265,28 +266,33 @@ $(document).ready(function() {
           $(".search-results-list li").remove(); // Removes all the li items
           var raw_establishments = data.businesses;
 
-          $(".search-results-list").append("<li>Select from below (results from Yelp):</li>");
-          var ajaxUrl = $(".search-results-list").attr("data-ajax-url");
+          if (raw_establishments.length > 0) {
+            $(".search-results-list").append("<li>Select from below (results from Yelp):</li>");
+            var ajaxUrl = $(".search-results-list").attr("data-ajax-url");
 
-          for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
-            var data = {
-              name: raw_establishments[i].name,
-              mobile_url: raw_establishments[i].mobile_url,
-              url: raw_establishments[i].url,
-              image: raw_establishments[i].image_url,
-              location: searchLocation,
-              yelp_id: raw_establishments[i].id
+            for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
+              var data = {
+                name: raw_establishments[i].name,
+                mobile_url: raw_establishments[i].mobile_url,
+                url: raw_establishments[i].url,
+                image: raw_establishments[i].image_url,
+                location: raw_establishments[i].location.address[0],
+                full_location: raw_establishments[i].location.display_address.join(", "),
+                yelp_id: raw_establishments[i].id
+              }
+
+              $.ajax({
+                url: ajaxUrl,
+                method: "get",
+                dataType: 'json',
+                data: data
+              })
+              .done(function(data) {
+                $(".search-results-list").append(data.template);
+              })
             }
-
-            $.ajax({
-              url: ajaxUrl,
-              method: "get",
-              dataType: 'json',
-              data: data
-            })
-            .done(function(data) {
-              $(".search-results-list").append(data.template);
-            })
+          } else {
+            $(".search-results-list").append("<li>No results - please try another search</li>");
           }
         }
       });
