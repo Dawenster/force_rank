@@ -91,12 +91,12 @@ $(document).ready(function() {
     for (var i = 0; i < sliders.length; i++) {
       var itemScore = $(sliders[i]).attr("data-item-score");
       $(sliders[i]).simpleSlider("setValue", itemScore)
-      $(sliders[i]).siblings(".slider").children(".dragger").text(itemScore * 100);
+      $(sliders[i]).siblings(".slider").children(".dragger").text(Math.round(itemScore * 100));
     }
   }
 
   $("body").on("slider:changed", ".selected-slider", function (event, data) {
-    $(this).siblings(".slider").children(".dragger").text(Math.ceil(data.value * 100));
+    $(this).siblings(".slider").children(".dragger").text(Math.round(data.value * 100));
   });
 
   displaySlidersOnEdit();
