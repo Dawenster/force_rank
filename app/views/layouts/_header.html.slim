@@ -1,7 +1,6 @@
 .header
   .top-links
-    - new_list_link = user_signed_in? ? new_list_path : new_user_registration_path
-    = link_to("Create new list", new_list_link, :class => "button tiny create-new-list-button")
+    = link_to("Create new list", new_list_path, :class => "button tiny create-new-list-button")
     
     = render "layouts/account_details"
   .title
