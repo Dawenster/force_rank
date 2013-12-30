@@ -322,10 +322,10 @@ $(document).ready(function() {
                 $(".search-results-list").append(data.template);
               })
             }
-            searchLoader("off");
           } else {
             $(".search-results-list").append("<li>No results - please try another search</li>");
           }
+          searchLoader("off");
         }
       });
     });
