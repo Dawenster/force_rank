@@ -17,7 +17,7 @@ $(document).ready(function() {
     $("#what-matters").autocomplete({
       source: tags,
       select: function(event, ui) {
-        appendTag($(this).val(), ui);
+        appendTag(ui.item.label);
         $(this).val('');
         return false;
       }
