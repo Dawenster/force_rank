@@ -293,41 +293,46 @@ $(document).ready(function() {
         'cache': true,
         'dataType': 'jsonp',
         'jsonpCallback': 'cb',
-        'success': function(data, textStats, XMLHttpRequest) {
-          $(".search-results-list li").remove(); // Removes all the li items
-          var raw_establishments = data.businesses;
-
-          if (raw_establishments.length > 0) {
-            $(".search-results-list").append("<li>Select from below (results from Yelp):</li>");
-            var ajaxUrl = $(".search-results-list").attr("data-ajax-url");
-
-            for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
-              var data = {
-                name: raw_establishments[i].name,
-                mobile_url: raw_establishments[i].mobile_url,
-                url: raw_establishments[i].url,
-                image: raw_establishments[i].image_url,
-                location: raw_establishments[i].location.address[0],
-                full_location: raw_establishments[i].location.display_address.join(", "),
-                yelp_id: raw_establishments[i].id
-              }
-
-              $.ajax({
-                url: ajaxUrl,
-                method: "get",
-                dataType: 'json',
-                data: data
-              })
-              .done(function(data) {
-                $(".search-results-list").append(data.template);
-              })
-            }
-          } else {
-            $(".search-results-list").append("<li>No results - please try another search</li>");
-          }
+        timeout: 3000,
+        error: function(xhr, status, err){ 
+          $(".search-results-list").append("<li>Hm... this is taking too long.  Are you searching in a country that <a href='http://officialblog.yelp.com/'>Yelp doesn't exist in</a>?</li>");
           searchLoader("off");
         }
-      });
+      })
+      .done(function(data) {
+        $(".search-results-list li").remove(); // Removes all the li items
+        var raw_establishments = data.businesses;
+
+        if (raw_establishments.length > 0) {
+          $(".search-results-list").append("<li>Select from below (results from Yelp):</li>");
+          var ajaxUrl = $(".search-results-list").attr("data-ajax-url");
+
+          for (var i = 0; i < Math.min(raw_establishments.length, 5); i++) {
+            var data = {
+              name: raw_establishments[i].name,
+              mobile_url: raw_establishments[i].mobile_url,
+              url: raw_establishments[i].url,
+              image: raw_establishments[i].image_url,
+              location: raw_establishments[i].location.address[0],
+              full_location: raw_establishments[i].location.display_address.join(", "),
+              yelp_id: raw_establishments[i].id
+            }
+
+            $.ajax({
+              url: ajaxUrl,
+              method: "get",
+              dataType: 'json',
+              data: data
+            })
+            .done(function(data) {
+              $(".search-results-list").append(data.template);
+            })
+          }
+        } else {
+          $(".search-results-list").append("<li>No results - please try another search</li>");
+        }
+        searchLoader("off");
+      })
     });
   }
 });
